@@ -1,0 +1,67 @@
+.employeeDashboardMainContainerDIV
+{
+    padding-top: 50px;
+    padding-left: 30px;
+    padding-right: 30px
+}
+
+.tasksCardsContainerUL
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style-type: none;
+    margin-top: 40px;
+    padding: 0px;
+}
+
+.TastcardLI
+{
+    width: 300px;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 25px;
+}
+
+.tasksListContainerUL
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 0px;
+    list-style-type: none;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-top: 60px;
+}
+
+
+.taskLI
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color:rgb(241, 228, 91);
+    height: 400px;
+    width: 500px;
+    border-radius: 10px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    padding: 40px;
+}
+
+.priorityAndDateContainerDIV
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.taskPrioirityP
+{
+    background-color: red;
+    color: #ffffff;
+    font-size: 30px;
+    border-radius: 5px;
+    padding: 8px;
+}
