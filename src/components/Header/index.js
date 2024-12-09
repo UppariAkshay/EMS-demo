@@ -1,10 +1,18 @@
 import './index.css'
 
-const Header = ({name}) => {
+const Header = (props) => {
+
+    const {handleLogout} = props
+    const loggedInUserData = JSON.parse(localStorage.getItem('loggedInUser'))
+
+    const onClickLogout = () => {
+        handleLogout()
+    }
+
     return(
         <div className='headerDIV'>
-            <h1>Hey {name}, </h1>
-            <button className='btn btn-danger'>Logout</button>
+            <h1>Hey, {loggedInUserData.userData.firstName} </h1>
+            <button onClick={onClickLogout} className='btn btn-danger'>Logout</button>
         </div>
     )
 }

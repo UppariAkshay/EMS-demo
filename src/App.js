@@ -11,40 +11,34 @@ const userLoginConstants = {
   noLogin: 'NO LOGIN',
   employeeLogin: 'EMPLOYEE LOGIN',
   adminLogin: 'ADMIN LOGIN',
-  loading: 'LOADING'
 }
 
 function App() {
 
-  const [loginStatus, setloginStatus] = useState(userLoginConstants.loading)
-  const [loggedInUserData, setLoggedInUserData] = useState()
+  const [loginStatus, setloginStatus] = useState(userLoginConstants.noLogin)
+  const [loggedInUserData, setLoggedInUserData] = useState(JSON.parse(localStorage.getItem('loggedInUser')))
 
   const {employees, admin} = getLocalStorage()
 
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
-    
-    setLoggedInUserData(loggedInUser)
 
     loggedInUser === null ? setloginStatus(userLoginConstants.noLogin) : setloginStatus(loggedInUser.role)
 
   }, [loginStatus])
   
-  const renderView = () => {
-    console.log(loggedInUserData, 'logged in usr data')
+  const renderView = () => { 
 
     switch (loginStatus){
       case userLoginConstants.adminLogin:
-        return <AdminDashboard data={loggedInUserData.userData[0]} />
+        return <AdminDashboard handleLogout={handleLogout} data={loggedInUserData} />
         break
       case userLoginConstants.employeeLogin:
-        return <EmployeeDashboard data={loggedInUserData.userData[0]} />
+        return <EmployeeDashboard handleLogout={handleLogout} data={loggedInUserData} />
         break
       case userLoginConstants.noLogin:
         return <Login handleLogin={handleLogin} />
         break
-      case userLoginConstants.loading:
-        return <TailSpin />
       default:
         break
     }
@@ -53,27 +47,31 @@ function App() {
   const handleLogin = (email, password) => {
     const {employees, admin} = getLocalStorage()
 
-    const isEmployye = employees.filter(eachEmployee => eachEmployee.email === email && eachEmployee.password === password)
-    const isAdmin = admin.filter(eachAmin => eachAmin.email === email && eachAmin.password === password)
-
-    console.log(isAdmin, 'admin')
+    const isEmployye = employees.find(eachEmployee => eachEmployee.email === email && eachEmployee.password === password)
+    const isAdmin = admin.find(eachAmin => eachAmin.email === email && eachAmin.password === password)
     
-    if (isEmployye.length > 0)
+    if (isEmployye)
     {
-      setloginStatus(userLoginConstants.employeeLogin)
-      setLoggedInUserData(isEmployye)
       localStorage.setItem('loggedInUser', JSON.stringify({userData: isEmployye, role: userLoginConstants.employeeLogin}))
+      setLoggedInUserData(isEmployye)
+      setloginStatus(userLoginConstants.employeeLogin)
     }
-    else if (isAdmin.length > 0)
+    else if (isAdmin)
     {
-      setloginStatus(userLoginConstants.adminLogin)
-      setLoggedInUserData(isAdmin)
       localStorage.setItem('loggedInUser', JSON.stringify({userData: isAdmin, role: userLoginConstants.adminLogin}))
+      setLoggedInUserData(isAdmin)
+      setloginStatus(userLoginConstants.adminLogin)
+      
     }
     else{
       alert('Invalid Credentials')
     }
     
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('loggedInUser')
+    setloginStatus(userLoginConstants.noLogin)
   }
 
 

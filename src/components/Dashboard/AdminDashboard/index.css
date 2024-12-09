@@ -6,11 +6,14 @@
 
 .createNewTaskFORM
 {
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between; */
     border: 1px solid #69e550;
     padding: 20px;
     border-radius: 10px;
     margin-top: 30px;
-    width: 500px;
+    width: 100%;
 }
 
 .inputAndLabelContainerDIV
@@ -20,10 +23,10 @@
     justify-content: flex-start;
     align-items: flex-start;
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .descriptionTEXTAREA
 {
     height: 100px;
-    width: 100%;
 }

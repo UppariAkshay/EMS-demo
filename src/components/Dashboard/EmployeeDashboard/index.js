@@ -1,109 +1,48 @@
 import './index.css'
 import Header from '../../Header'
 
-const EmployeeDashboard = ({data}) => {
+const EmployeeDashboard = ({handleLogout}) => {
+
+    const {userData} = JSON.parse(localStorage.getItem('loggedInUser'))
+
+    const displayTaskCard = (taskInfo) => {
+        return (
+            <li className='taskLI'>
+                <div className='priorityAndDateContainerDIV'>
+                    <p className='taskPrioirityP'>High</p>
+                    <p>{taskInfo.taskDate}</p>
+                </div>
+                <h1>{taskInfo.taskTitle}</h1>
+                <p>{taskInfo.taskDescription}</p>
+            </li>
+        )
+    }
+
     return (
         <div className='employeeDashboardMainContainerDIV'>
-            <Header name={data.firstname} />
+            <Header handleLogout={handleLogout}/>
             <ul className='tasksCardsContainerUL'>
                 <li className='TastcardLI text-bg-danger'>
-                    <p>0</p>
-                    <p>New Task</p>
+                    <p>Failed</p>
+                    <p>{userData.taskCounts.failed}</p>
                 </li>
                 <li className='TastcardLI text-bg-primary'>
-                    <p>0</p>
-                    <p>New Task</p>
+                    <p>New Tasks</p>
+                    <p>{userData.taskCounts.newTask}</p>
                 </li>
                 <li className='TastcardLI text-bg-success'>
-                    <p>0</p>
-                    <p>New Task</p>
+                    <p>Completed Tasks</p>
+                    <p>{userData.taskCounts.completed}</p>
                 </li>
                 <li className='TastcardLI text-bg-warning'>
-                    <p>0</p>
-                    <p>New Task</p>
+                    <p>Active</p>
+                    <p>{userData.taskCounts.active}</p>
                 </li>
             </ul>
             <ul className='tasksListContainerUL'>
-                <li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li>
-                <li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li><li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li><li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li><li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li><li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li><li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li><li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li><li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li><li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li><li className='taskLI'>
-                    <div className='priorityAndDateContainerDIV'>
-                        <p className='taskPrioirityP'>High</p>
-                        <p>Date</p>
-                    </div>
-                    <h1>Task Name</h1>
-                    <p>Task Description</p>
-                </li>
-                
+                {
+                    userData.tasks.map(eachTask => displayTaskCard(eachTask))
+                }
             </ul>
         </div>
     )
