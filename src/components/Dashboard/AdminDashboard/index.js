@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react'
 import './index.css'
 import Header from '../../Header'
-import {AuthContext} from '../../../context/AuthContext'
+import {AuthContext} from '../../../LocalStorage'
 
-const AdminDashboard = ({handleLogout}) => {
+const AdminDashboard = ({handleLogout, employeesData}) => {
 
     const [taskTitle, setTaskTitle] = useState()
     const [date, setDate] = useState()
@@ -12,7 +12,7 @@ const AdminDashboard = ({handleLogout}) => {
     const [description, setDescription] = useState()
 
     const [adminDetails, setAdminDetails] = useState(JSON.parse(localStorage.getItem('loggedInUser')))
-    const {authData} = useContext(AuthContext)
+    const [setRegisteredEmployees, setRegisteredAdmin] = useContext(AuthContext)
 
     const getEmployeeInfo = (employeeInfo) => {
         return <tr>
@@ -30,12 +30,17 @@ const AdminDashboard = ({handleLogout}) => {
 
         if (assignTo)
         {
-            // setAuthData('auth data changed')
-            // setAuthData(authData.employees.map(eachEmployee => eachEmployee.firstName.toLowerCase() === assignTo.toLowerCase() ? {...eachEmployee, taskCounts: {...eachEmployee.taskCounts, newTask: eachEmployee.taskCounts.newTask + 1}, tasks: [...eachEmployee.tasks, newTaskObj]} : {...eachEmployee}))
+            setRegisteredEmployees(employeesData.map(eachEmployee => eachEmployee.firstName.toLowerCase() === assignTo.toLowerCase() ? {...eachEmployee, taskCounts: {...eachEmployee.taskCounts, newTask: eachEmployee.taskCounts.newTask + 1}, tasks: [...eachEmployee.tasks, newTaskObj]} : {...eachEmployee}))
         }
+
+        setAdminDetails('')
+        setAssignTo('')
+        setCategory('')
+        setDate('')
+        setDescription('')
+        setTaskTitle('')
     }
 
-    console.log(authData, 'authData')
     
     return (
         <div className='adminDashBoardMainContainerDIV'>
@@ -78,7 +83,7 @@ const AdminDashboard = ({handleLogout}) => {
                 </thead>
                 <tbody>
                     {
-                        // authData.employees.map(eachEmployee => getEmployeeInfo(eachEmployee))
+                        employeesData.map(eachEmployee => getEmployeeInfo(eachEmployee))
                     }
                 </tbody>
             </table>

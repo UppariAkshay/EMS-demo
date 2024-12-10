@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { createContext } from "react";
 
 const employees = [
     {
@@ -202,7 +204,6 @@ const employees = [
     }
 ];
 
-
 const admin = [{
     "firstName": "Adarsh",
     "id": 1,
@@ -210,15 +211,21 @@ const admin = [{
     "password": "123"
 }];
 
-export const setLocalStorage = () => 
-{
-    localStorage.setItem('employees', JSON.stringify(employees))
-    localStorage.setItem('admin', JSON.stringify(admin))
-}
+export const AuthContext = createContext()
 
-export const getLocalStorage = () => {
-    const admin = JSON.parse(localStorage.getItem("admin"))
-    const employees = JSON.parse(localStorage.getItem("employees"))
-    return {employees, admin}
-}
+export const DatabaseAndAPIs = ({children}) => {
+    const [registeredEmployees, setRegisteredEmployees] = useState(employees)
+    const [registeredAdmin, setRegisteredAdmin] = useState(admin)
 
+    useEffect(() => {
+        localStorage.setItem('authData', JSON.stringify({registeredEmployees, registeredAdmin}))
+    }, [registeredEmployees, registeredAdmin])
+
+    return (
+        <AuthContext.Provider value={[setRegisteredEmployees, setRegisteredAdmin, registeredEmployees]}>
+        {
+            children
+        }
+        </AuthContext.Provider>
+    )
+}

@@ -2,9 +2,9 @@ import './App.css';
 import Login from './components/Login' 
 import EmployeeDashboard from './components/Dashboard/EmployeeDashboard'
 import AdminDashboard from './components/Dashboard/AdminDashboard'
-import { getLocalStorage, setLocalStorage } from './LocalStorage';
+import { getAuthorizedUsersAPI, setLocalStorage } from './LocalStorage';
 import { useEffect, useContext, useState } from 'react';
-import {AuthContext} from './context/AuthContext'
+import {AuthContext} from './LocalStorage'
 import {TailSpin }  from 'react-loader-spinner'
 
 const userLoginConstants = {
@@ -18,23 +18,34 @@ function App() {
   const [loginStatus, setloginStatus] = useState(userLoginConstants.noLogin)
   const [loggedInUserData, setLoggedInUserData] = useState(JSON.parse(localStorage.getItem('loggedInUser')))
 
-  const {employees, admin} = getLocalStorage()
+  const [authData, setAuthData] = useState(null)
+
+  const [setRegisteredEmployees, setRegisteredAdmin, registeredEmployees] = useContext(AuthContext)
 
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'))
 
+    console.log('useeffect app component')
+
+    fetchAuthData()
+
     loggedInUser === null ? setloginStatus(userLoginConstants.noLogin) : setloginStatus(loggedInUser.role)
 
-  }, [loginStatus])
+  }, [])
+
+  const fetchAuthData = () => {
+    const authData = JSON.parse(localStorage.getItem('authData'))
+    setAuthData(authData)
+  }
   
   const renderView = () => { 
 
     switch (loginStatus){
       case userLoginConstants.adminLogin:
-        return <AdminDashboard handleLogout={handleLogout} data={loggedInUserData} />
+        return <AdminDashboard handleLogout={handleLogout} employeesData={authData.registeredEmployees} />
         break
       case userLoginConstants.employeeLogin:
-        return <EmployeeDashboard handleLogout={handleLogout} data={loggedInUserData} />
+        return <EmployeeDashboard handleLogout={handleLogout} data={authData.registeredEmployees} />
         break
       case userLoginConstants.noLogin:
         return <Login handleLogin={handleLogin} />
@@ -45,10 +56,10 @@ function App() {
   }
 
   const handleLogin = (email, password) => {
-    const {employees, admin} = getLocalStorage()
 
-    const isEmployye = employees.find(eachEmployee => eachEmployee.email === email && eachEmployee.password === password)
-    const isAdmin = admin.find(eachAmin => eachAmin.email === email && eachAmin.password === password)
+
+    const isEmployye = authData.registeredEmployees.find(eachEmployee => eachEmployee.email === email && eachEmployee.password === password)
+    const isAdmin = authData.registeredAdmin.find(eachAmin => eachAmin.email === email && eachAmin.password === password)
     
     if (isEmployye)
     {
@@ -61,7 +72,6 @@ function App() {
       localStorage.setItem('loggedInUser', JSON.stringify({userData: isAdmin, role: userLoginConstants.adminLogin}))
       setLoggedInUserData(isAdmin)
       setloginStatus(userLoginConstants.adminLogin)
-      
     }
     else{
       alert('Invalid Credentials')
@@ -73,7 +83,6 @@ function App() {
     localStorage.removeItem('loggedInUser')
     setloginStatus(userLoginConstants.noLogin)
   }
-
 
   return (
     <div>

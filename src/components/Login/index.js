@@ -1,15 +1,11 @@
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useContext, useState} from 'react'
-import { AuthContext } from '../../context/AuthContext';
-import { getLocalStorage } from '../../LocalStorage';
 
 const Login = ({handleLogin}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loginError, setLoginError] = useState('')
-
-    const [userData, setUserData] = useContext(AuthContext)
 
     const onSubmitLoginForm = (event) => {
         event.preventDefault()

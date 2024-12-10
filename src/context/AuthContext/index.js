@@ -1,23 +1,22 @@
-import { createContext, useState, useEffect } from "react"
-import { setLocalStorage, getLocalStorage } from "../../LocalStorage"
+// import { createContext, useState, useEffect } from "react"
+// import { setLocalStorage, getAuthorizedUsersAPI } from "../../LocalStorage"
 
-export const AuthContext = createContext()
+// export const AuthContext = createContext()
 
 
-export const AuthProvider = ({children}) => {
+// export const AuthProvider = ({children}) => {
 
-    const [authData, setauthData] = useState(null)
+//     const [authData, setAuthData] = useState(null)
 
-    useEffect(() => {
-        setLocalStorage()
-        const data = getLocalStorage()
-        setauthData(data)
-    }, [])
+//     useEffect(() => {
+//         const authorizedUsersData = getAuthorizedUsersAPI()
+//         setAuthData(authorizedUsersData)
+//     }, [])
 
-    return <div>
-        <AuthContext.Provider value={[authData, setauthData]}>
-            {children}
-        </AuthContext.Provider>
-    </div>
-}
+//     return <div>
+//         <AuthContext.Provider value={[authData, setAuthData]}>
+//             {children}
+//         </AuthContext.Provider>
+//     </div>
+// }
 
