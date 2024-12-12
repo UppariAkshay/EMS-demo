@@ -25,6 +25,9 @@ const Login = ({handleLogin}) => {
             <input onChange={(event) => setPassword(event.target.value)} value={password} id='passwordInput' className='form-control' type='password' placeholder='Enter your password' />
             <button type='submit' className='btn btn-info'>Login</button>
         </form>
+
+        <p>employee login credentials | email: e@e.com, password:123</p>
+        <p>Admin login credentials | email: admin@example.com password: 123</p>
         
         </div>
     )
