@@ -11,7 +11,7 @@ const Header = (props) => {
 
     return(
         <div className='headerDIV'>
-            <h1>Hey, {loggedInUserData.userData.firstName} </h1>
+            <h1>Hey, {loggedInUserData.userName} </h1>
             <button onClick={onClickLogout} className='btn btn-danger'>Logout</button>
         </div>
     )

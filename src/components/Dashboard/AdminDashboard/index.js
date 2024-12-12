@@ -3,7 +3,7 @@ import './index.css'
 import Header from '../../Header'
 import {AuthContext} from '../../../LocalStorage'
 
-const AdminDashboard = ({handleLogout, data}) => {
+const AdminDashboard = ({handleLogout}) => {
 
     const [taskTitle, setTaskTitle] = useState()
     const [date, setDate] = useState()
@@ -31,7 +31,7 @@ const AdminDashboard = ({handleLogout, data}) => {
 
         if (assignTo)
         {
-            setRegisteredEmployees(data.map(eachEmployee => eachEmployee.firstName.toLowerCase() === assignTo.toLowerCase() ? {...eachEmployee, taskCounts: {...eachEmployee.taskCounts, newTask: eachEmployee.taskCounts.newTask + 1}, tasks: [...eachEmployee.tasks, newTaskObj]} : {...eachEmployee}))
+            setRegisteredEmployees(registeredEmployees.map(eachEmployee => eachEmployee.firstName.toLowerCase() === assignTo.toLowerCase() ? {...eachEmployee, taskCounts: {...eachEmployee.taskCounts, newTask: eachEmployee.taskCounts.newTask + 1}, tasks: [...eachEmployee.tasks, newTaskObj]} : {...eachEmployee}))
         }
 
         setAdminDetails('')
@@ -41,52 +41,11 @@ const AdminDashboard = ({handleLogout, data}) => {
         setDescription('')
         setTaskTitle('')
     }
-
-    // const createNewTask = (e) => {
-    //     e.preventDefault();
-    //     const newTaskObj = {
-    //       active: false,
-    //       category: category,
-    //       completed: false,
-    //       failed: false,
-    //       newTask: true,
-    //       taskDate: date,
-    //       taskDescription: description,
-    //       taskTitle: taskTitle,
-    //     };
-      
-    //     if (assignTo) {
-    //       // Update the employee's tasks and task counts
-    //       setRegisteredEmployees((prevEmployees) =>
-    //         prevEmployees.map((eachEmployee) =>
-    //           eachEmployee.firstName.toLowerCase() === assignTo.toLowerCase()
-    //             ? {
-    //                 ...eachEmployee,
-    //                 taskCounts: { ...eachEmployee.taskCounts, newTask: eachEmployee.taskCounts.newTask + 1 },
-    //                 tasks: [...eachEmployee.tasks, newTaskObj],
-    //               }
-    //             : eachEmployee
-    //         )
-    //       );
-      
-    //       // Save the updated employees to localStorage so that `App` can access the new state
-    //       const updatedEmployees = [...employeesData]; // assuming `employeesData` is the current state of employees
-    //       localStorage.setItem('authData', JSON.stringify({ registeredEmployees: updatedEmployees}));
-    //     }
-      
-    //     setAdminDetails('');
-    //     setAssignTo('');
-    //     setCategory('');
-    //     setDate('');
-    //     setDescription('');
-    //     setTaskTitle('');
-    //   };
-      
     
 
     return (
         <div className='adminDashBoardMainContainerDIV'>
-            <Header handleLogout={(e) => handleLogout(e)} />
+            <Header  handleLogout={(e) => handleLogout(e)} />
             <form onSubmit={createNewTask} className='createNewTaskFORM'>
                 {/* <div> */}
                     <div className='inputAndLabelContainerDIV'>
@@ -125,7 +84,7 @@ const AdminDashboard = ({handleLogout, data}) => {
                 </thead>
                 <tbody>
                     {
-                        data.map(eachEmployee => getEmployeeInfo(eachEmployee))
+                        registeredEmployees.map(eachEmployee => getEmployeeInfo(eachEmployee))
                     }
                 </tbody>
             </table>

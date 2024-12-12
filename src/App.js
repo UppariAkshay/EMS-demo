@@ -36,7 +36,7 @@ function App() {
         return <AdminDashboard handleLogout={handleLogout} data={registeredEmployees} />
         break
       case userLoginConstants.employeeLogin:
-        return <EmployeeDashboard handleLogout={handleLogout} data={registeredEmployees} />
+        return <EmployeeDashboard handleLogout={handleLogout} />
         break
       case userLoginConstants.noLogin:
         return <Login handleLogin={handleLogin} />
@@ -53,13 +53,13 @@ function App() {
     
     if (isEmployye)
     {
-      localStorage.setItem('loggedInUser', JSON.stringify({userData: isEmployye, role: userLoginConstants.employeeLogin}))
+      localStorage.setItem('loggedInUser', JSON.stringify({employeesData: isEmployye, role: userLoginConstants.employeeLogin, userName: isEmployye.firstName}))
       // setLoggedInUserData(isEmployye)
       setloginStatus(userLoginConstants.employeeLogin)
     }
     else if (isAdmin)
     {
-      localStorage.setItem('loggedInUser', JSON.stringify({userData: registeredEmployees, role: userLoginConstants.adminLogin}))
+      localStorage.setItem('loggedInUser', JSON.stringify({employeesData: registeredEmployees, role: userLoginConstants.adminLogin, userName: isAdmin.firstName}))
       // setLoggedInUserData(isAdmin)
       setloginStatus(userLoginConstants.adminLogin)
     }

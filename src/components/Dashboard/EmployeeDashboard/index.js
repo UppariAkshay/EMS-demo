@@ -3,7 +3,8 @@ import Header from '../../Header'
 
 const EmployeeDashboard = ({handleLogout}) => {
 
-    const {userData} = JSON.parse(localStorage.getItem('loggedInUser'))
+    const {employeesData} = JSON.parse(localStorage.getItem('loggedInUser'))
+    console.log(employeesData, 'employeesdata in rmpDashboard')
 
 
     const displayTaskCard = (taskInfo) => {
@@ -17,7 +18,7 @@ const EmployeeDashboard = ({handleLogout}) => {
                 <p>{taskInfo.taskDescription}</p>
                 {taskInfo.active === true && <button id={taskInfo.taskTitle} className='btn btn-success'>Mark as Complete</button>}
                 {taskInfo.active === true && <button className='btn btn-danger mt-3'>Mark as Fail</button>}
-                {taskInfo.newTask === true && <button className='btn btn-dark'>Start Working</button>}
+                {taskInfo.newTask === true && <button className='btn btn-dark mt-3'>Start Working</button>}
                 {taskInfo.completed === true && <p className='bg bg-primary text-light text-center p-2 rounded-2'>Completed</p>}
             </li>
         )
@@ -29,25 +30,25 @@ const EmployeeDashboard = ({handleLogout}) => {
             <ul className='tasksCardsContainerUL'>
                 <li className='TastcardLI text-bg-danger'>
                     <p>Failed</p>
-                    <p>{userData.taskCounts.failed}</p>
+                    <p>{employeesData.taskCounts.failed}</p>
                 </li>
                 <li className='TastcardLI text-bg-primary'>
                     <p>New Tasks</p>
-                    <p>{userData.taskCounts.newTask}</p>
+                    <p>{employeesData.taskCounts.newTask}</p>
                 </li>
                 <li className='TastcardLI text-bg-success'>
                     <p>Completed Tasks</p>
-                    <p>{userData.taskCounts.completed}</p>
+                    <p>{employeesData.taskCounts.completed}</p>
                 </li>
                 <li className='TastcardLI text-bg-warning'>
                     <p>Active</p>
-                    <p>{userData.taskCounts.active}</p>
+                    <p>{employeesData.taskCounts.active}</p>
                 </li>
             </ul>
             
             <ul className='tasksListContainerUL'>
                 {
-                    userData.tasks.map(eachTask => displayTaskCard(eachTask))
+                    employeesData.tasks.map(eachTask => displayTaskCard(eachTask))
                 }
             </ul>
         </div>
