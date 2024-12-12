@@ -1,9 +1,11 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import './index.css'
 import Header from '../../Header'
 import {AuthContext} from '../../../LocalStorage'
 
-const AdminDashboard = ({handleLogout, employeesData}) => {
+const AdminDashboard = ({handleLogout, data}) => {
+
+    // const [employeesData, setEmployeesData] = useState(data)
 
     const [taskTitle, setTaskTitle] = useState()
     const [date, setDate] = useState()
@@ -12,7 +14,11 @@ const AdminDashboard = ({handleLogout, employeesData}) => {
     const [description, setDescription] = useState()
 
     const [adminDetails, setAdminDetails] = useState(JSON.parse(localStorage.getItem('loggedInUser')))
-    const [setRegisteredEmployees, setRegisteredAdmin] = useContext(AuthContext)
+    const [registeredEmployees, registeredAdmin, setRegisteredEmployees, setRegisteredAdmin] = useContext(AuthContext)
+
+    // useEffect(() => {
+    //     setEmployeesData(data)
+    // }, [data])
 
     const getEmployeeInfo = (employeeInfo) => {
         return <tr>
@@ -30,7 +36,7 @@ const AdminDashboard = ({handleLogout, employeesData}) => {
 
         if (assignTo)
         {
-            setRegisteredEmployees(employeesData.map(eachEmployee => eachEmployee.firstName.toLowerCase() === assignTo.toLowerCase() ? {...eachEmployee, taskCounts: {...eachEmployee.taskCounts, newTask: eachEmployee.taskCounts.newTask + 1}, tasks: [...eachEmployee.tasks, newTaskObj]} : {...eachEmployee}))
+            setRegisteredEmployees(data.map(eachEmployee => eachEmployee.firstName.toLowerCase() === assignTo.toLowerCase() ? {...eachEmployee, taskCounts: {...eachEmployee.taskCounts, newTask: eachEmployee.taskCounts.newTask + 1}, tasks: [...eachEmployee.tasks, newTaskObj]} : {...eachEmployee}))
         }
 
         setAdminDetails('')
@@ -41,7 +47,49 @@ const AdminDashboard = ({handleLogout, employeesData}) => {
         setTaskTitle('')
     }
 
+    // const createNewTask = (e) => {
+    //     e.preventDefault();
+    //     const newTaskObj = {
+    //       active: false,
+    //       category: category,
+    //       completed: false,
+    //       failed: false,
+    //       newTask: true,
+    //       taskDate: date,
+    //       taskDescription: description,
+    //       taskTitle: taskTitle,
+    //     };
+      
+    //     if (assignTo) {
+    //       // Update the employee's tasks and task counts
+    //       setRegisteredEmployees((prevEmployees) =>
+    //         prevEmployees.map((eachEmployee) =>
+    //           eachEmployee.firstName.toLowerCase() === assignTo.toLowerCase()
+    //             ? {
+    //                 ...eachEmployee,
+    //                 taskCounts: { ...eachEmployee.taskCounts, newTask: eachEmployee.taskCounts.newTask + 1 },
+    //                 tasks: [...eachEmployee.tasks, newTaskObj],
+    //               }
+    //             : eachEmployee
+    //         )
+    //       );
+      
+    //       // Save the updated employees to localStorage so that `App` can access the new state
+    //       const updatedEmployees = [...employeesData]; // assuming `employeesData` is the current state of employees
+    //       localStorage.setItem('authData', JSON.stringify({ registeredEmployees: updatedEmployees}));
+    //     }
+      
+    //     setAdminDetails('');
+    //     setAssignTo('');
+    //     setCategory('');
+    //     setDate('');
+    //     setDescription('');
+    //     setTaskTitle('');
+    //   };
+      
     
+    console.log(data, 'data')
+
     return (
         <div className='adminDashBoardMainContainerDIV'>
             <Header handleLogout={(e) => handleLogout(e)} />
@@ -83,7 +131,7 @@ const AdminDashboard = ({handleLogout, employeesData}) => {
                 </thead>
                 <tbody>
                     {
-                        employeesData.map(eachEmployee => getEmployeeInfo(eachEmployee))
+                        data.map(eachEmployee => getEmployeeInfo(eachEmployee))
                     }
                 </tbody>
             </table>

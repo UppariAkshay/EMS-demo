@@ -218,11 +218,15 @@ export const DatabaseAndAPIs = ({children}) => {
     const [registeredAdmin, setRegisteredAdmin] = useState(admin)
 
     useEffect(() => {
-        localStorage.setItem('authData', JSON.stringify({registeredEmployees, registeredAdmin}))
-    }, [registeredEmployees, registeredAdmin])
+        const loggedInUserData = JSON.parse(localStorage.getItem('loggedInUser'))
+        if (loggedInUserData)
+        {
+            setRegisteredEmployees(loggedInUserData.userData)
+        }
+    }, [])
 
     return (
-        <AuthContext.Provider value={[setRegisteredEmployees, setRegisteredAdmin, registeredEmployees]}>
+        <AuthContext.Provider value={[registeredEmployees, registeredAdmin, setRegisteredEmployees, setRegisteredAdmin]}>
         {
             children
         }
