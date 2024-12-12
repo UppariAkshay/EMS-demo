@@ -5,8 +5,6 @@ import {AuthContext} from '../../../LocalStorage'
 
 const AdminDashboard = ({handleLogout, data}) => {
 
-    // const [employeesData, setEmployeesData] = useState(data)
-
     const [taskTitle, setTaskTitle] = useState()
     const [date, setDate] = useState()
     const [assignTo, setAssignTo] = useState()
@@ -16,9 +14,6 @@ const AdminDashboard = ({handleLogout, data}) => {
     const [adminDetails, setAdminDetails] = useState(JSON.parse(localStorage.getItem('loggedInUser')))
     const [registeredEmployees, registeredAdmin, setRegisteredEmployees, setRegisteredAdmin] = useContext(AuthContext)
 
-    // useEffect(() => {
-    //     setEmployeesData(data)
-    // }, [data])
 
     const getEmployeeInfo = (employeeInfo) => {
         return <tr>
@@ -88,7 +83,6 @@ const AdminDashboard = ({handleLogout, data}) => {
     //   };
       
     
-    console.log(data, 'data')
 
     return (
         <div className='adminDashBoardMainContainerDIV'>
@@ -97,24 +91,24 @@ const AdminDashboard = ({handleLogout, data}) => {
                 {/* <div> */}
                     <div className='inputAndLabelContainerDIV'>
                         <label className='form-label' htmlForm='taskTitle'>Task Title</label>
-                        <input onChange={(e) => setTaskTitle(e.target.value) } id='taskTitle' className='form-control inputElement' type='text' placeholder='Enter Task Title'/>
+                        <input value={taskTitle} onChange={(e) => setTaskTitle(e.target.value) } id='taskTitle' className='form-control inputElement' type='text' placeholder='Enter Task Title'/>
                     </div>
                     <div className='inputAndLabelContainerDIV'>
                         <label className='form-label' htmlForm='taskTitle'>Date</label>
-                        <input onChange={(e) => setDate(e.target.value) } id='taskTitle' className='form-control' type='date' placeholder='dd/mm/yyy'/>
+                        <input value={date} onChange={(e) => setDate(e.target.value) } id='taskTitle' className='form-control' type='date' placeholder='dd/mm/yyy'/>
                     </div>
                     <div className='inputAndLabelContainerDIV'>
                         <label className='form-label' htmlForm='taskTitle'>Assign to</label>
-                        <input onChange={(e) => setAssignTo(e.target.value)} id='taskTitle' className='form-control' type='text' placeholder='Employee Name'/>
+                        <input value={assignTo} onChange={(e) => setAssignTo(e.target.value)} id='taskTitle' className='form-control' type='text' placeholder='Employee Name'/>
                     </div>
                     <div className='inputAndLabelContainerDIV'>
                         <label className='form-label' htmlForm='taskTitle'>Category</label>
-                        <input onChange={(e) => setCategory(e.target.value)} id='taskTitle' className='form-control' type='text' placeholder='Design, Dev, etc.'/>
+                        <input value={category} onChange={(e) => setCategory(e.target.value)} id='taskTitle' className='form-control' type='text' placeholder='Design, Dev, etc.'/>
                     </div>
                 {/* </div> */}
                 <div className='inputAndLabelContainerDIV'>
                     <label>Description</label>
-                    <textarea onChange={(e) => setDescription(e.target.value)} className='descriptionTEXTAREA form-control'></textarea>
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} className='descriptionTEXTAREA form-control'></textarea>
                     <button type='submit' className='w-100 mt-3 btn btn-success'>Create Task</button>
                 </div>
             </form>

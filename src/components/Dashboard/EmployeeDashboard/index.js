@@ -5,7 +5,6 @@ const EmployeeDashboard = ({handleLogout}) => {
 
     const {userData} = JSON.parse(localStorage.getItem('loggedInUser'))
 
-    
 
     const displayTaskCard = (taskInfo) => {
         return (
@@ -45,6 +44,7 @@ const EmployeeDashboard = ({handleLogout}) => {
                     <p>{userData.taskCounts.active}</p>
                 </li>
             </ul>
+            
             <ul className='tasksListContainerUL'>
                 {
                     userData.tasks.map(eachTask => displayTaskCard(eachTask))

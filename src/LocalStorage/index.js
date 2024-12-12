@@ -214,16 +214,17 @@ const admin = [{
 export const AuthContext = createContext()
 
 export const DatabaseAndAPIs = ({children}) => {
-    const [registeredEmployees, setRegisteredEmployees] = useState(employees)
+    const [registeredEmployees, setRegisteredEmployees] = useState(JSON.parse(localStorage.getItem('loggedInUser')) !== null ? JSON.parse(localStorage.getItem('loggedInUser')).userData : employees)
     const [registeredAdmin, setRegisteredAdmin] = useState(admin)
 
     useEffect(() => {
+        console.log('local storage use effect')
         const loggedInUserData = JSON.parse(localStorage.getItem('loggedInUser'))
         if (loggedInUserData)
         {
-            setRegisteredEmployees(loggedInUserData.userData)
+            localStorage.setItem('loggedInUser', JSON.stringify({userData: registeredEmployees, role: loggedInUserData.role}))
         }
-    }, [])
+    }, [registeredEmployees])
 
     return (
         <AuthContext.Provider value={[registeredEmployees, registeredAdmin, setRegisteredEmployees, setRegisteredAdmin]}>
